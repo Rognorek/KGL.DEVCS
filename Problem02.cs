@@ -13,7 +13,7 @@ namespace KG.DEVCS.PB02
         static void Main(string[] args)
         {
             int maxbuff = 10;
-            string temp = "";
+            string buffInputString = "";
 
             const char North = 'С';
             const char South = 'Ю';
@@ -23,7 +23,7 @@ namespace KG.DEVCS.PB02
             do
             {
                 int posx = 0, posy = 0;
-                bool flag = true;
+                bool isCorrect = true;
 
                 Console.Clear();
                 Console.WriteLine("Введите {0} символов маршрута, состоящие из букв:С,Ю,З,В.", maxbuff);
@@ -34,53 +34,51 @@ namespace KG.DEVCS.PB02
                 Console.WriteLine("\'СсЮюЗзВвсЮ\'");
                 Console.ResetColor();
 
-                temp = Console.ReadLine().ToUpper();
-                if (temp.Length == maxbuff)
+                buffInputString = Console.ReadLine().ToUpper();
+                if (buffInputString.Length == maxbuff)
                 {
                     int cursor = 0;
-                    foreach (char item in temp)
+                    foreach (char item in buffInputString)
                     {
-                        cursor++;
-                        if (item == North || item == South || item == East || item == West)
+                        cursor++;                        
+                        
+                        switch (item)
                         {
-                            switch (item)
-                            {
-                                case North:
-                                    posy++; break;
+                            case North:
+                                posy++; break;
 
-                                case East:
-                                    posx++; break;
+                            case East:
+                                posx++; break;
 
-                                case South:
-                                    posy--; break;
+                            case South:
+                                posy--; break;
 
-                                case West:
-                                    posx--; break;
-                            }
+                            case West:
+                                posx--; break;
+                                
+                            default:
+                                isCorrect = false;
+                                Console.Write("Неверные данные в позиции: ");
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("{0}, {1}", cursor, item);
+                                Console.ResetColor();
+                                break;
                         }
-                        else
-                        {
-                            flag = false;
-                            Console.Write("Неверные данные в позиции: ");
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("{0}, {1}", cursor, item);
-                            Console.ResetColor();
-                        }
-
+                        
                     }
                 }
                 else
                 {
-                    flag = false;
+                    isCorrect = false;
                     Console.Clear();
                     Console.WriteLine("Неверные вводные данные. Ожидается {0} символов.", maxbuff);
                 }
-                if (flag)
+                if (isCorrect)
                 {
                     Console.Clear();
                     Console.Write("Для данных: ");
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("\'{0}\'", temp);
+                    Console.WriteLine("\'{0}\'", buffInputString);
                     Console.ResetColor();
                     Console.Write("расстояние от начала координат составляет: ");
                     Console.ForegroundColor = ConsoleColor.Yellow;
