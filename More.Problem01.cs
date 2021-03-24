@@ -20,7 +20,7 @@ namespace KG.DEVCS.MORE.PR01
 
                 if (inputCount <= 0)
                 {
-                    Console.WriteLine("Введите вещественное число в диапазоне 1...{0}", int.MaxValue.ToString());
+                    Console.WriteLine("Введите натуральное число в диапазоне 1...{0}", int.MaxValue.ToString());
                 }
                 else if (inputCount % 4 == 0 || inputCount == 1)
                 {
