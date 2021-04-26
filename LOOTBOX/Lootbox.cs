@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace LOOTBOX
 {
@@ -7,11 +9,11 @@ namespace LOOTBOX
         public const int MAX_LEN_STRING_FOR_NAME = 50;
 
         private static List<Worker> workers;
-        private static Queue<Order> orders;
+        private static Queue<Client> clients;
         static Lootbox()
         {
             workers = new();
-            orders = new();
+            clients = new();
         }
         public static void AddWorker(Worker worker)
         {
@@ -21,17 +23,114 @@ namespace LOOTBOX
         {
             workers.Remove(worker);
         }
-        public static void AddOrder(Order order)
+        public static void AddClient(Client client)
         {
-            orders.Enqueue(order);
+            clients.Enqueue(client);
         }
-        public static void DelOrder(Order order)
+        public static void DelClient(Client client)
         {
-            orders.Dequeue();
+            clients.Dequeue();
         }
-        public static Order Peak()
+        public static Client Peak()
         {
-            return orders.Peek();
+            return clients.Peek();
+        }
+
+        public static ConsoleKey GetPressedKey() { return Console.ReadKey(true).Key; }
+        public static bool TryInputNumber(string message, out int number)
+        {
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("(1 - малый, 2 - средний, 3 - большой)");
+                Console.WriteLine(message);
+                switch (Lootbox.GetPressedKey())
+                {
+                    case ConsoleKey.D1 or ConsoleKey.NumPad1:
+                        number = 1; return true;
+
+                    case ConsoleKey.D2 or ConsoleKey.NumPad3:
+                        number = 2; return true;
+
+                    case ConsoleKey.D3 or ConsoleKey.NumPad4:
+                        number = 3; return true;
+
+                    default:
+                        Console.WriteLine("Введено неверное значение.");
+                        break;
+                }
+
+                Console.WriteLine("Esc - вернуться в предыдущее меню.\nЛюбая клавиша для повтора ввода.");
+
+            } while (Lootbox.GetPressedKey() != ConsoleKey.Escape);
+
+            number = 0;
+            return false;
+        }
+        public static bool TryInputNumber(string message, out float number)
+        {
+            do
+            {
+                Console.Clear();
+                Console.Write(message);
+                if (float.TryParse(Console.ReadLine(), out number))
+                {
+                    if (number > 0 && number <= float.MaxValue)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Значение должно быть больше 0");
+                    }
+                }
+                Console.WriteLine("Введено неверное значение.");
+                Console.WriteLine("Esc - вернуться в предыдущее меню.\nЛюбая клавиша для повтора ввода.");
+
+            } while (Lootbox.GetPressedKey() != ConsoleKey.Escape);
+
+            number = 0.0f;
+            return false;
+        }
+        public static bool TryInputString(string message, out string str)
+        {
+            string input, pattern = "^[\\p{L}\\p{M}\\-\\s]+$";
+
+            do
+            {
+                Console.Clear();
+                Console.Write(message);
+                input = Console.ReadLine().Trim();
+
+                if (input.Length > Lootbox.MAX_LEN_STRING_FOR_NAME)
+                {
+                    Console.WriteLine("Строка будет обрезана до 50 символов.");
+                    input = input.Substring(0, Lootbox.MAX_LEN_STRING_FOR_NAME).Trim();
+                }
+
+                if (string.IsNullOrWhiteSpace(input))
+                {
+                    Console.WriteLine("Строка пустая или состоит из пробелов.");
+                    input = "";
+                }
+
+                if (!Regex.IsMatch(input, pattern))
+                {
+                    Console.WriteLine("Строка должна содержать буквы. Пробел и или дефис для двойных фамилий.");
+                    input = "";
+                }
+                else
+                {
+                    str = input;
+                    return true;
+                }
+
+                Console.WriteLine("Esc - вернуться в предыдущее меню.\nЛюбая клавиша для повтора ввода.");
+
+            } while (Lootbox.GetPressedKey() != ConsoleKey.Escape);
+
+            str = "";
+            return false;
         }
     }
 }

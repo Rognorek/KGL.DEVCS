@@ -6,21 +6,11 @@ namespace LOOTBOX
     {
         static void Main()
         {
-            //do
-            //{
-            //    string input, pattern = "^[\\p{L}\\p{M}\\-\\s]+$";
-
-            //    Console.Write("input=");
-            //    input = Console.ReadLine().Trim();
-            //    Console.WriteLine(Regex.IsMatch(input, pattern) ? "True---" : "False+++");
-
-            //} while (Console.ReadKey(True).Key != ConsoleKey.Escape);            
-
             do
             {
                 MenuMain.PrintMenu();
 
-                switch (MenuMain.GetPressedKey())
+                switch (Lootbox.GetPressedKey())
                 {
                     case ConsoleKey.NumPad1 or ConsoleKey.D1:
                         //user space

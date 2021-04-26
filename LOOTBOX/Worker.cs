@@ -3,14 +3,14 @@
     public class Worker : Person
     {
         public BoxSize BaseSize { get; }
-        public int Speed { get; }
+        public float Speed { get; }
         public bool IsBusy { get; set; }
         public bool IsFired { get; set; }
         public Worker(string fName,
                       string lName,
                       string mName = "",
                       BoxSize size = BoxSize.Small,
-                      int speed = 5,
+                      float speed = 5f,
                       bool isBusy = false,
                       bool isFired = false) : base(fName, lName, mName)
         {
