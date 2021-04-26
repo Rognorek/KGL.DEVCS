@@ -15,6 +15,10 @@ namespace LOOTBOX
             Console.WriteLine("\t2. АДМИНИСТРАТОР");
 
             Console.WriteLine("\n\n\nНажмите ESC для выхода их программы.");
-        }        
+        }
+        public static ConsoleKey GetPressedKey()
+        {
+            return Console.ReadKey(true).Key;
+        }
     }
 }

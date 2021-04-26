@@ -10,11 +10,11 @@ namespace LOOTBOX
             {
                 PrintMenu();
 
-                switch (Lootbox.GetPressedKey())
+                switch (GetPressedKey())
                 {
                     case ConsoleKey.D1 or ConsoleKey.NumPad1:
                         // add order
-                        MenuAddClient();
+
                         break;
 
                     case ConsoleKey.D2 or ConsoleKey.NumPad2:
@@ -45,22 +45,6 @@ namespace LOOTBOX
             Console.WriteLine("\t3. Просмотреть список работников.\n");
             Console.WriteLine("\n\n\nНажмите ESC для перехода на предыдущий экран.");
         }
-        private static void MenuAddClient()
-        {
-            if (!Lootbox.TryInputString("Введите имя:", out string fname)) { return; }
-            if (!Lootbox.TryInputString("Введите фамилию:", out string lname)) { return; }
-            if (!Lootbox.TryInputString("Введите отчество:", out string mname)) { return; }
-            if (!Lootbox.TryInputNumber("Введите дистанцию (км):", out float distance)) { return; }
-            if (!Lootbox.TryInputNumber("Выберете размер бандероли:", out int boxsize)) { return; }
-
-            Console.Clear();
-            Console.WriteLine("Нажмите Y, чтобы оформить заказ:\n");
-            Console.WriteLine("{0} {1} {2}\nДистанция: {3:0.00} км.\nРазмер бандероли: {4}",
-                fname, lname, mname, distance, (BoxSize)boxsize);
-            if (Lootbox.GetPressedKey() == ConsoleKey.Y)
-            {
-                Lootbox.AddClient(new Client(fname, lname, (BoxSize)boxsize, distance, mname));
-            }
-        }
+        private static ConsoleKey GetPressedKey() { return Console.ReadKey(true).Key; }
     }
 }

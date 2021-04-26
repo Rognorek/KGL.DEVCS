@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace LOOTBOX
 {
@@ -10,7 +11,7 @@ namespace LOOTBOX
             {
                 PrintMenu();
 
-                switch (Lootbox.GetPressedKey())
+                switch (GetPressedKey())
                 {
                     case ConsoleKey.D1 or ConsoleKey.NumPad1:
                         // add worker
@@ -19,7 +20,6 @@ namespace LOOTBOX
 
                     case ConsoleKey.D2 or ConsoleKey.NumPad2:
                         // del worker
-                        MenuDelWorker();
                         break;
 
                     case ConsoleKey.Escape:
@@ -39,26 +39,52 @@ namespace LOOTBOX
             Console.WriteLine("\t2. Удалить работника.\n");
             Console.WriteLine("\n\n\nНажмите ESC для перехода на предыдущий экран.");
         }
+        private static ConsoleKey GetPressedKey() { return Console.ReadKey(true).Key; }
+
         private static void MenuAddWorker()
         {
-            if (!Lootbox.TryInputString("Введите имя сотрудника:", out string fname)) { return; }
-            if (!Lootbox.TryInputString("Введите фамилию сотрудника:", out string lname)) { return; }
-            if (!Lootbox.TryInputString("Введите отчество сотрудника:", out string mname)) { return; }
-            if (!Lootbox.TryInputNumber("Введите скорость доставки сотрудником (км/ч):", out float speed)) { return; }
-            if (!Lootbox.TryInputNumber("Введите доступный размер бандероли для сотрудника:", out int boxsize)) { return; }
+            //int speed;
+            //BoxSize boxsize;
 
-            Console.Clear();
-            Console.WriteLine("Нажмите Y, чтобы добавить данные о сотруднике:\n");
-            Console.WriteLine("{0} {1} {2}\nСкорость: {3:0.00}\nРазмер бандероли: {4}",
-                fname, lname, mname, speed, (BoxSize)boxsize);
-            if (Lootbox.GetPressedKey() == ConsoleKey.Y)
-            {
-                Lootbox.AddWorker(new Worker(fname, lname, mname, (BoxSize)boxsize, speed));
-            }
+            string fname = InputName("Введите имя сотрудника: ");
+            string lname = InputName("Введите фамилию сотрудника: ");
+            string mname = InputName("Введите отчество сотрудника: ");
+
+            //worker = new(fname, lname, mname, boxsize, speed);
+            //Lootbox.AddWorker(worker);
         }
-        private static void MenuDelWorker()
+        private static string InputName(string message)
         {
+            string input, pattern = "^[\\p{L}\\p{M}\\-\\s]+$";
+            do
+            {
+                Console.Clear();
+                Console.Write(message);
+                input = Console.ReadLine().Trim();
+                
+                if (input.Length > Lootbox.MAX_LEN_STRING_FOR_NAME)
+                {
+                    Console.WriteLine("Строка будет обрезана до 50 символов.");
+                    input = input.Substring(0, Lootbox.MAX_LEN_STRING_FOR_NAME).Trim();
+                    ;
+                }
+                
+                if (string.IsNullOrWhiteSpace(input))
+                {
+                    Console.WriteLine("Строка пустая или состоит из пробелов.");
+                    input="";
+                }
+                
+                if (!Regex.IsMatch(input, pattern))
+                {
+                    Console.WriteLine("Строка должна содержать буквы. Пробел и или дефис для двойных фамилий.");
+                    input="";
+                }               
+                
+                Console.WriteLine("Esc - выйти.");
+            } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
 
+            return input;
         }
     }
 }
