@@ -10,12 +10,16 @@ namespace LOOTBOX
         public Client(string fName,
                      string lName,
                      BoxSize size,
-                     float distance,                     
+                     float distance,
                      string mName = "") : base(fName, lName, mName)
         {
             BoxSize = size;
             Distance = distance;
             Stamp = DateTime.Now;
+        }
+        public string ToString(char delim = ';')
+        {
+            return FName() + delim + LName() + delim + MName();
         }
     }
 }

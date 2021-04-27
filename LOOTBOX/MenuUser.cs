@@ -18,14 +18,16 @@ namespace LOOTBOX
                         break;
 
                     case ConsoleKey.D2 or ConsoleKey.NumPad2:
-                        // list queue orders
+                        // list queue
+                        MenuListClient();
 
                         break;
 
                     case ConsoleKey.D3 or ConsoleKey.NumPad3:
                         // list workers
-
+                        MenuListWorkres();
                         break;
+
 
                     case ConsoleKey.Escape:
                         return;
@@ -61,6 +63,24 @@ namespace LOOTBOX
             {
                 Lootbox.AddClient(new Client(fname, lname, (BoxSize)boxsize, distance, mname));
             }
+        }
+        private static void MenuListWorkres()
+        {
+            do
+            {
+                Console.Clear();
+                Lootbox.PrintWorkers();
+                Console.WriteLine("\n\n\n Для возврата нажмите Esc");
+            } while (Lootbox.GetPressedKey() != ConsoleKey.Escape);
+        }
+        private static void MenuListClient()
+        {
+            do
+            {
+                Console.Clear();
+                Lootbox.PrintClient();
+                Console.WriteLine("\n\n\n Для возврата нажмите Esc");
+            } while (Lootbox.GetPressedKey() != ConsoleKey.Escape);
         }
     }
 }

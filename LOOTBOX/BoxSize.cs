@@ -2,6 +2,6 @@
 {
     public enum BoxSize
     {
-        Small=1, Middle, Big
+        Small = 1, Middle, Big
     }
 }

@@ -19,5 +19,11 @@
             IsBusy = isBusy;
             IsFired = isFired;
         }
+        public string ToString(char delim = ';')
+        {
+            string result = "";
+            result += FName() + delim + LName() + delim + MName();
+            return result;
+        }        
     }
 }

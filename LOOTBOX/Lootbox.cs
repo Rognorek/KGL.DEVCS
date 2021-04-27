@@ -15,14 +15,26 @@ namespace LOOTBOX
             workers = new();
             clients = new();
         }
+        #region with Worker
         public static void AddWorker(Worker worker)
         {
             workers.Add(worker);
         }
-        public static void DelWorker(Worker worker)
+        public static void DelWorker(int pos)
         {
-            workers.Remove(worker);
+            workers.RemoveAt(pos);
         }
+        public static void PrintWorkers()
+        {            
+            foreach (Worker item in workers)
+            {
+                if (item.IsFired) continue;
+                Console.WriteLine(item.ToString(' '));
+            }
+        }
+        #endregion
+
+        #region with Client
         public static void AddClient(Client client)
         {
             clients.Enqueue(client);
@@ -35,7 +47,14 @@ namespace LOOTBOX
         {
             return clients.Peek();
         }
-
+        public static void PrintClient()
+        {
+            foreach (Client item in clients)
+            {
+                Console.WriteLine(item.ToString(' '));
+            }
+        }
+        #endregion
         public static ConsoleKey GetPressedKey() { return Console.ReadKey(true).Key; }
         public static bool TryInputNumber(string message, out int number)
         {
@@ -132,5 +151,6 @@ namespace LOOTBOX
             str = "";
             return false;
         }
+
     }
 }
