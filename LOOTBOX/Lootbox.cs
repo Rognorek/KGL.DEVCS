@@ -25,11 +25,11 @@ namespace LOOTBOX
             workers.RemoveAt(pos);
         }
         public static void PrintWorkers()
-        {            
+        {
             foreach (Worker item in workers)
             {
                 if (item.IsFired) continue;
-                Console.WriteLine(item.ToString(' '));
+                Console.WriteLine(item.ToString());
             }
         }
         #endregion
@@ -51,7 +51,7 @@ namespace LOOTBOX
         {
             foreach (Client item in clients)
             {
-                Console.WriteLine(item.ToString(' '));
+                Console.WriteLine(item.ToString());
             }
         }
         #endregion

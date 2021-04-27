@@ -20,14 +20,12 @@ namespace LOOTBOX
                     case ConsoleKey.D2 or ConsoleKey.NumPad2:
                         // list queue
                         MenuListClient();
-
                         break;
 
                     case ConsoleKey.D3 or ConsoleKey.NumPad3:
                         // list workers
                         MenuListWorkres();
                         break;
-
 
                     case ConsoleKey.Escape:
                         return;
@@ -61,7 +59,7 @@ namespace LOOTBOX
                 fname, lname, mname, distance, (BoxSize)boxsize);
             if (Lootbox.GetPressedKey() == ConsoleKey.Y)
             {
-                Lootbox.AddClient(new Client(fname, lname, (BoxSize)boxsize, distance, mname));
+                Lootbox.AddClient(new Client(fname, lname, mname, (BoxSize)boxsize, distance));
             }
         }
         private static void MenuListWorkres()

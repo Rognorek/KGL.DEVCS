@@ -2,28 +2,42 @@
 {
     public class Worker : Person
     {
-        public BoxSize BaseSize { get; }
+        public BoxSize Boxsize { get; }
         public float Speed { get; }
         public bool IsBusy { get; set; }
         public bool IsFired { get; set; }
-        public Worker(string fName,
-                      string lName,
-                      string mName = "",
-                      BoxSize size = BoxSize.Small,
-                      float speed = 5f,
-                      bool isBusy = false,
-                      bool isFired = false) : base(fName, lName, mName)
+        public Worker(string fname,
+                      string lname,
+                      string mname,
+                      BoxSize size,
+                      float speed,
+                      bool isbusy = false,
+                      bool isfired = false) : base(fname, lname, mname)
         {
-            BaseSize = size;
+            Boxsize = size;
             Speed = speed;
-            IsBusy = isBusy;
-            IsFired = isFired;
+            IsBusy = isbusy;
+            IsFired = isfired;
         }
-        public string ToString(char delim = ';')
+        public override string ToString()
         {
-            string result = "";
-            result += FName() + delim + LName() + delim + MName();
+            string result;
+            result = $"{LName} {FName} {MName} ";
+
+            switch (Boxsize)
+            {
+                case BoxSize.Small:
+                    result += "Малый ";
+                    break;
+                case BoxSize.Middle:
+                    result += "Средний ";
+                    break;
+                case BoxSize.Big:
+                    result += "Большой ";
+                    break;
+            }
+            result += Speed.ToString("0.000");
             return result;
-        }        
+        }
     }
 }

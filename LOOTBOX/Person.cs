@@ -2,15 +2,19 @@
 {
     public class Person
     {
-        private readonly string fName = "", lName = "", mName = "";
-        public Person(string fName, string lName, string mName = "")
+        public string FName { get; set; }
+        public string LName { get; set; }
+        public string MName { get; set; }
+
+        public Person()
         {
-            this.fName = fName;
-            this.lName = lName;
-            this.mName = mName;
+            FName = LName = MName = "Неизвестно";
         }
-        public string FName() { return fName; }
-        public string LName() { return lName; }
-        public string MName() { return mName; }
+        public Person(string fname, string lname, string mname)
+        {
+            FName = fname;
+            LName = lname;
+            MName = mname;
+        }
     }
 }
