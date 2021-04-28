@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace LOOTBOX
@@ -49,9 +50,45 @@ namespace LOOTBOX
         }
         public static void PrintClient()
         {
-            foreach (Client item in clients)
+            Console.Clear();
+            IEnumerable<Client> view = clients;
+            
+            if (view.Count() == 0)
             {
-                Console.WriteLine(item.ToString());
+                Console.WriteLine("Нет данных");
+                return;
+            }
+
+            Console.WriteLine("Выберете режимы сортировки:" +
+                " F1 - по имени;" +
+                " F2 - по фамилии;" +
+                " F3 - по дистанции;" +
+                " F4 - по размеру посылки.");
+
+            switch (GetPressedKey())
+            {
+                case ConsoleKey.F1:
+                    view = clients.OrderBy(Client => Client.FName);
+                    goto default;
+
+                case ConsoleKey.F2:
+                    view = clients.OrderBy(Client => Client.LName);
+                    goto default;
+
+                case ConsoleKey.F3:
+                    view = clients.OrderBy(Client => Client.Distance);
+                    goto default;
+
+                case ConsoleKey.F4:
+                    view = clients.OrderBy(Client => Client.Boxsize);
+                    goto default;
+
+                default:
+                    foreach (var item in view)
+                    {
+                        Console.WriteLine(item.ToString());
+                    }
+                    break;
             }
         }
         #endregion

@@ -68,7 +68,7 @@ namespace LOOTBOX
             {
                 Console.Clear();
                 Lootbox.PrintWorkers();
-                Console.WriteLine("\n\n\n Для возврата нажмите Esc");
+                Console.WriteLine("\n\n\nДля возврата нажмите Esc. Или любую клавишу для повтора вывода списка.");
             } while (Lootbox.GetPressedKey() != ConsoleKey.Escape);
         }
         private static void MenuListClient()
@@ -77,7 +77,7 @@ namespace LOOTBOX
             {
                 Console.Clear();
                 Lootbox.PrintClient();
-                Console.WriteLine("\n\n\n Для возврата нажмите Esc");
+                Console.WriteLine("\n\n\nДля возврата нажмите Esc. Или любую клавишу для повтора вывода списка.");
             } while (Lootbox.GetPressedKey() != ConsoleKey.Escape);
         }
     }
