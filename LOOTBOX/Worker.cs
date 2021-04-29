@@ -5,19 +5,16 @@
         public BoxSize Boxsize { get; }
         public float Speed { get; }
         public bool IsBusy { get; set; }
-        public bool IsFired { get; set; }
         public Worker(string fname,
                       string lname,
                       string mname,
                       BoxSize size,
                       float speed,
-                      bool isbusy = false,
-                      bool isfired = false) : base(fname, lname, mname)
+                      bool isbusy = false) : base(fname, lname, mname)
         {
             Boxsize = size;
             Speed = speed;
             IsBusy = isbusy;
-            IsFired = isfired;
         }
         public override string ToString()
         {

@@ -58,7 +58,7 @@ namespace LOOTBOX
         }
         private static void MenuDelWorker()
         {
-
+            Lootbox.DelWorker();
         }
     }
 }

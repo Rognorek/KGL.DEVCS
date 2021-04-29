@@ -15,23 +15,192 @@ namespace LOOTBOX
         {
             workers = new();
             clients = new();
+#if DEBUG
+            #region workers_add
+            workers.Add(new Worker("A", "A", "A", (BoxSize)1, 5.5f));
+            workers.Add(new Worker("B", "B", "B", (BoxSize)2, 10f));
+            workers.Add(new Worker("C", "C", "C", (BoxSize)3, 15f));
+            workers.Add(new Worker("D", "D", "D", (BoxSize)1, 20f));
+            workers.Add(new Worker("E", "E", "E", (BoxSize)2, 25f));
+            workers.Add(new Worker("F", "F", "F", (BoxSize)3, 30f));
+            workers.Add(new Worker("G", "G", "G", (BoxSize)1, 35f));
+            workers.Add(new Worker("H", "H", "H", (BoxSize)2, 40f));
+            workers.Add(new Worker("I", "I", "I", (BoxSize)3, 45f));
+            workers.Add(new Worker("J", "J", "J", (BoxSize)1, 50f));
+            workers.Add(new Worker("K", "K", "K", (BoxSize)2, 60f));
+            workers.Add(new Worker("L", "L", "L", (BoxSize)3, 5.5f));
+            workers.Add(new Worker("M", "M", "M", (BoxSize)1, 10f));
+            workers.Add(new Worker("N", "N", "N", (BoxSize)2, 15f));
+            workers.Add(new Worker("O", "O", "O", (BoxSize)3, 20f));
+            workers.Add(new Worker("P", "P", "P", (BoxSize)1, 25f));
+            workers.Add(new Worker("Q", "Q", "Q", (BoxSize)2, 30f));
+            workers.Add(new Worker("R", "R", "R", (BoxSize)3, 35f));
+            workers.Add(new Worker("S", "S", "S", (BoxSize)1, 40f));
+            workers.Add(new Worker("T", "T", "T", (BoxSize)2, 45f));
+            workers.Add(new Worker("U", "U", "U", (BoxSize)3, 50f));
+            workers.Add(new Worker("V", "V", "V", (BoxSize)1, 60f));
+            workers.Add(new Worker("W", "W", "W", (BoxSize)2, 100f));
+            workers.Add(new Worker("X", "X", "X", (BoxSize)3, 1000f));
+            workers.Add(new Worker("Y", "Y", "Y", (BoxSize)1, 0.001f));
+            workers.Add(new Worker("Z", "Z", "Z", (BoxSize)2, 17.17f));
+            #endregion
+
+            #region clients_add
+            // todo
+            #endregion
+#endif
         }
         #region with Worker
         public static void AddWorker(Worker worker)
         {
             workers.Add(worker);
         }
-        public static void DelWorker(int pos)
-        {
-            workers.RemoveAt(pos);
-        }
         public static void PrintWorkers()
         {
             foreach (Worker item in workers)
             {
-                if (item.IsFired) continue;
+                if (item.IsBusy) continue;
                 Console.WriteLine(item.ToString());
             }
+        }
+        public static void DelWorker()
+        {
+            if (workers.Count == 0)
+            {
+                Console.Clear();
+                Console.WriteLine("Нет данных. Нажмите любую клавишу чтобы вернуться в предыщее меню.");
+                GetPressedKey();
+                return;
+            }
+
+            int pagesize = 5;
+            int lastscreen = (int)Math.Ceiling(((Double)(workers.Count) / (Double)pagesize));
+            int pos = -1;
+
+            int screen = 1;
+            ConsoleKey key;
+            do
+            {
+                Console.Clear();
+                DrawScreen(screen, pagesize, lastscreen);
+                key = GetPressedKey();
+                switch (key)
+                {
+                    case ConsoleKey.LeftArrow:
+                        if (screen - 1 >= 1) screen--;
+                        goto default;
+
+                    case ConsoleKey.RightArrow:
+                        if (screen + 1 <= lastscreen) screen++;
+                        goto default;
+
+                    case ConsoleKey.Escape:
+                        return;
+
+                    default:
+                        if (key == ConsoleKey.D1) pos = 0;
+                        if (key == ConsoleKey.D2) pos = 1;
+                        if (key == ConsoleKey.D3) pos = 2;
+                        if (key == ConsoleKey.D4) pos = 3;
+                        if (key == ConsoleKey.D5) pos = 4;
+                        if (pos != -1 && (screen - 1) * pagesize + pos < workers.Count)
+                        {
+                            ConsoleKey answer;
+
+                            Console.Clear();
+                            Console.WriteLine("Подтвердите удаление записи о сотруднике:\n\n\n");
+                            Console.WriteLine(workers[(screen - 1) * pagesize + pos].ToString());
+                            Console.WriteLine("\n\n\nY - YES. N - NO.");
+                            answer = GetPressedKey();
+                            if (answer == ConsoleKey.Y)
+                            {
+                                workers.RemoveAt((screen - 1) * pagesize + pos);
+
+                                int prevls = lastscreen;
+                                lastscreen = (int)Math.Ceiling(((Double)(workers.Count) / (Double)pagesize));
+                                if (prevls > lastscreen && screen != 1)
+                                {
+                                    screen--;
+                                }
+                            }
+                            pos = -1;
+                        }
+                        break;
+                }
+            } while (true);
+        }
+        private static void DrawScreen(int screen, int pagesize, int maxscreens)
+        {
+            string buff;
+            string header = "|KEY|  №  |        ИМЯ         |      ФАМИЛИЯ       |      ОТЧЕСТВО      |\n";
+            string footer = "| LEFT ARROW :: PREV | RIGHT ARROW :: NEXT | ESC :: BACK 2 PREVIOUS MENU |\n";
+
+            string prefooter =
+                "| PRESS KEY{1...5} THAT DELETE RECORD BY NUMBER. " +
+                "   SCREEN: " + screen.ToString().PadLeft(5 - screen.ToString().Length, ' ') +
+                " OF " + maxscreens.ToString().PadLeft(5 - maxscreens.ToString().Length, ' ') + " |\n";
+            // SCREEN: _____ OF _____
+
+            char border = '|';
+
+            Console.Clear();
+            Console.BackgroundColor = ConsoleColor.DarkCyan;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(header);
+            Console.ResetColor();
+            int delta = (screen - 1) * pagesize;
+
+            for (int pos = 0; pos < pagesize; pos++)
+            {
+                if (pos % 2 == 0)
+                {
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                else
+                {
+                    Console.BackgroundColor = ConsoleColor.DarkGray;
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                if (delta + pos < workers.Count)
+                {
+                    int index = delta + pos; int printid = index + 1;
+                    buff =
+                        border +
+                        "[" + (1 + pos).ToString() + "]" +
+                        border +
+                        "".PadLeft(5 - printid.ToString().Length, ' ') + printid.ToString() +
+                        border +
+                        ToCoverStr(workers[index].FName) +
+                        border +
+                        ToCoverStr(workers[index].LName) +
+                        border +
+                        ToCoverStr(workers[index].MName) +
+                        border;
+                    Console.WriteLine(buff);
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("".PadRight(74, '~'));
+            Console.ResetColor();
+            Console.WriteLine("\n\n\n");
+            Console.BackgroundColor = ConsoleColor.DarkGreen;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write(prefooter);
+            Console.Write(footer);
+            Console.ResetColor();
+        }
+        private static string ToCoverStr(string str)
+        {
+            if (str.Length < 20) return str + "".PadRight(20 - str.Length, ' ');
+            if (str.Length > 20) return str.Substring(0, 20);
+            return str;
         }
         #endregion
 
@@ -52,10 +221,15 @@ namespace LOOTBOX
         {
             Console.Clear();
             IEnumerable<Client> view = clients;
-            
+
             if (view.Count() == 0)
             {
                 Console.WriteLine("Нет данных");
+                return;
+            }
+            if (view.Count() == 1)
+            {
+                Console.WriteLine(view.ElementAt(0).ToString());
                 return;
             }
 
@@ -188,6 +362,5 @@ namespace LOOTBOX
             str = "";
             return false;
         }
-
     }
 }
