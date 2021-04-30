@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LOOTBOX
+namespace IPLootbox
 {
     public class Client : Person
     {
@@ -16,6 +16,20 @@ namespace LOOTBOX
             Boxsize = boxsize;
             Distance = distance;
             Stamp = DateTime.Now;
+        }
+        public Client(string fname,
+                      string lname,
+                      string mname,
+                      BoxSize boxsize,
+                      float distance,
+                      DateTime stamp)
+        {
+            FName = fname;
+            LName = lname;
+            MName = mname;
+            Boxsize = boxsize;
+            Distance = distance;
+            Stamp = stamp;
         }
         public override string ToString()
         {
@@ -34,8 +48,12 @@ namespace LOOTBOX
                     result += "Большой ";
                     break;
             }
-            result += Distance.ToString("0.000");
+            result += Distance.ToString("F3");
             return result;
+        }
+        public string ToFile()
+        {
+            return $"{FName};{LName};{MName};{(int)Boxsize};{Distance.ToString("F3")};{Stamp.Ticks.ToString()}";
         }
     }
 }
