@@ -1,89 +1,135 @@
 ﻿using System;
 
-namespace IPv4Check
+namespace Program
 {
-    class IPv4Check
+    public static class Program
     {
-        const int MAX_OCTETS = 4;
-        const char DELIMETR_OCTET = '.';
-        enum Answer : int
-        {
-            No = 0,
-            Yes = 1
-        }
-        private static void Main()
+        public static void Main()
         {
             do
             {
-                Console.Clear();
-                string userInputString = InputString();
-
-                if (IsIPv4(userInputString))
+                uint usernumber;
+                do
                 {
-                    PrintResult(Answer.Yes);
+                    Console.Clear();
+                    Console.WriteLine("Введите целое положительное число n, которое задаст матрицу размером 2n+1: ");
+                } while (!uint.TryParse(Console.ReadLine(), out usernumber));
+
+                Matrix.SquareCoil test = new(usernumber);
+                Console.WriteLine(test.ToString());
+
+                Console.WriteLine("Esc - Exit. Anykey to repeat.");
+            } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
+        }
+    }
+}
+
+namespace Matrix
+{
+    public class SquareCoil
+    {
+        public uint Size { get; }
+        public uint[,] Matrix { get; }
+
+        private uint StartIndex { get; }
+
+        public SquareCoil(uint size)
+        {
+            Size = size * 2 + 1;
+            StartIndex = size;
+            Matrix = new uint[Size, Size];
+            Fill();
+        }
+        private enum NavCCW { Up, Left, Down, Right }
+        private void Fill()
+        {
+            NavCCW cur = NavCCW.Up;
+            uint number = 0, x = 0, y = 0, iteractionsize = 1;
+
+            x = y = StartIndex;
+            Matrix[x, y] = number++;
+
+            do
+            {
+                switch (cur)
+                {
+                    case NavCCW.Up:
+                        for (int i = 0; i < iteractionsize; i++)
+                        {
+                            if (number == (Size * Size)) break;
+                            x--;
+                            Matrix[x, y] = number++;
+                        }
+
+                        goto default;
+
+                    case NavCCW.Left:
+                        for (int i = 0; i < iteractionsize; i++)
+                        {
+                            y--;
+                            Matrix[x, y] = number++;
+                        }
+
+                        iteractionsize++;
+                        goto default;
+
+                    case NavCCW.Down:
+                        for (int i = 0; i < iteractionsize; i++)
+                        {
+                            x++;
+                            Matrix[x, y] = number++;
+                        }
+
+                        goto default;
+
+                    case NavCCW.Right:
+                        for (int i = 0; i < iteractionsize; i++)
+                        {
+                            y++;
+                            Matrix[x, y] = number++;
+                        }
+
+                        iteractionsize++;
+                        goto default;
+
+                    default:
+
+                        if (cur == NavCCW.Right)
+                        {
+                            cur = NavCCW.Up;
+                        }
+                        else
+                        {
+                            cur += 1;
+                        }
+
+                        break;
+                }
+            } while (number < (Size * Size) - 1);
+        }
+        public override string ToString()
+        {
+            if (Size == 1) return Matrix[0, 0].ToString();
+
+            int maxlen = 1 + (Size * Size).ToString().Length;
+            uint pos = 0;
+            string buff = "";
+
+            foreach (uint item in Matrix)
+            {
+                if (pos % (Size - 1) == 0 && pos != 0)
+                {
+                    buff += item.ToString().PadLeft(maxlen) + "\n";
+                    pos = 0;
                 }
                 else
                 {
-                    PrintResult(Answer.No);
-                }
-                Console.Write("Repeat?(Y/N)");
-            } while (Console.ReadKey().Key == ConsoleKey.Y);
-        }
-
-        private static string InputString()
-        {
-            string consoleInput;
-
-            do
-            {
-                Console.Write("Input IPv4 addres:");
-                consoleInput = Console.ReadLine().Trim();
-            } while (string.IsNullOrEmpty(consoleInput));
-
-            return consoleInput;
-        }
-        private static void PrintResult(Answer answer)
-        {
-            Console.WriteLine("{0}", answer == Answer.No ? "No" : "Yes");
-        }
-
-        private static bool IsIPv4(string addres)
-        {
-
-            string[] groups = addres.Split(DELIMETR_OCTET);
-            byte[] octets = new byte[MAX_OCTETS];
-
-            if (addres.Length < 7 || addres.Length > 15)
-            {
-                return false;
-            }
-
-            if (groups.Length != MAX_OCTETS)
-            {
-                return false;
-            }
-
-            foreach (string item in groups)
-            {
-                if (item.Length == 0 || item.Length > 3 || item != item.Trim())
-                {
-                    return false;
+                    buff += item.ToString().PadLeft(maxlen);
+                    pos++;
                 }
             }
 
-            for (int i = 0; i < MAX_OCTETS; i++)
-            {
-                if (!byte.TryParse(groups[i], out octets[i]))
-                {
-                    return false;
-                }
-            }
-
-            foreach (byte item in octets)
-            {
-                Console.Write("{0}.", item);
-            }
-            return true;
+            return buff;
         }
     }
 }
