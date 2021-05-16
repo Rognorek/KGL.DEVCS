@@ -11,3 +11,4 @@
 | 06 | 16.04 - 23.04 | Библиотеки | [IP Lootbox](IP_LOOTBOX) | NA | NA |
 | 07 | 23.04 - 30.04 | FORMS | __todo__ | NA | NA |
 | 08 | 30.04 - ZZ.ZZ | DEMODAY | [IP Lootbox](IP_LOOTBOX) | NA | NA |
+| 09 | 14.05 - 21.05 | Бизнеслогика | NA | NA | NA |
