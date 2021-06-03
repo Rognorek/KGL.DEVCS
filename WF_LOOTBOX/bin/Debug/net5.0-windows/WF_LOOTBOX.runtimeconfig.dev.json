@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\LOKI\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\LOKI\\.nuget\\packages"
+    ]
+  }
+}

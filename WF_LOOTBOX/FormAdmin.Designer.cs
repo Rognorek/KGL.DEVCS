@@ -94,7 +94,7 @@ namespace WF_LOOTBOX
             this.dgvWorkers.RowHeadersWidth = 50;
             this.dgvWorkers.RowTemplate.Height = 41;
             this.dgvWorkers.Size = new System.Drawing.Size(1888, 672);
-            this.dgvWorkers.TabIndex = 0;
+            this.dgvWorkers.TabIndex = 8;
             // 
             // cID
             // 

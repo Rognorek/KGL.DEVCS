@@ -1,0 +1,12 @@
+C:\Users\LOKI\Desktop\WF_LOOTBOX\IPLootbox\bin\Debug\net5.0-windows\IPLootbox.deps.json
+C:\Users\LOKI\Desktop\WF_LOOTBOX\IPLootbox\bin\Debug\net5.0-windows\IPLootbox.dll
+C:\Users\LOKI\Desktop\WF_LOOTBOX\IPLootbox\bin\Debug\net5.0-windows\ref\IPLootbox.dll
+C:\Users\LOKI\Desktop\WF_LOOTBOX\IPLootbox\bin\Debug\net5.0-windows\IPLootbox.pdb
+C:\Users\LOKI\Desktop\WF_LOOTBOX\IPLootbox\obj\Debug\net5.0-windows\IPLootbox.csproj.AssemblyReference.cache
+C:\Users\LOKI\Desktop\WF_LOOTBOX\IPLootbox\obj\Debug\net5.0-windows\IPLootbox.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\LOKI\Desktop\WF_LOOTBOX\IPLootbox\obj\Debug\net5.0-windows\IPLootbox.AssemblyInfoInputs.cache
+C:\Users\LOKI\Desktop\WF_LOOTBOX\IPLootbox\obj\Debug\net5.0-windows\IPLootbox.AssemblyInfo.cs
+C:\Users\LOKI\Desktop\WF_LOOTBOX\IPLootbox\obj\Debug\net5.0-windows\IPLootbox.csproj.CoreCompileInputs.cache
+C:\Users\LOKI\Desktop\WF_LOOTBOX\IPLootbox\obj\Debug\net5.0-windows\IPLootbox.dll
+C:\Users\LOKI\Desktop\WF_LOOTBOX\IPLootbox\obj\Debug\net5.0-windows\ref\IPLootbox.dll
+C:\Users\LOKI\Desktop\WF_LOOTBOX\IPLootbox\obj\Debug\net5.0-windows\IPLootbox.pdb
