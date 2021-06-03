@@ -24,10 +24,6 @@ namespace WF_LOOTBOX
             txtUserName.Text = txtUserPassword.Text = "";
             if (userstring.ToUpper() == "ADMIN")
             {
-                DBMSSQLEXP sql = new DBMSSQLEXP();
-                sql.SelectWorkers();
-                sql.SelectClients();
-
                 this.Hide();
                 this.Enabled = false;
 
@@ -50,9 +46,11 @@ namespace WF_LOOTBOX
             }
             else
             {
-                MessageBox.Show("Неверное имя пользователя или пароль","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                MessageBox.Show("Неверное имя пользователя или пароль",
+                                "Error",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
             }
-
         }
     }
 }

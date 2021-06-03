@@ -1,7 +1,7 @@
 ﻿using IPLootbox;
 using Microsoft.Data.SqlClient;
 
-namespace WF_LOOTBOX
+namespace WF_LOOTBOX_MSSQL
 {
     public class DBMSSQLEXP
     {
