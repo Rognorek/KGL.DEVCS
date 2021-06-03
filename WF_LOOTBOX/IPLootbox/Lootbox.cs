@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using WF_LOOTBOX_MSSQL;
+
 
 namespace IPLootbox
 {
@@ -24,41 +24,13 @@ namespace IPLootbox
         {
             workers.Add(worker);
         }
-        public static void AddWorker(string fname, string lname, string mname, float speed, int boxsize)
+        public static void DelWorker(Worker worker)
         {
-            DBMSSQLEXP db = new();
-            db.AddWorker(fname, lname, mname, speed, boxsize);
-        }
-        public static void DelWorker(int id)
-        {
-            DBMSSQLEXP db = new();
-            db.DeleteWorker(id);
+            workers.Remove(worker);
         }
         public static void ClearWorkers()
         {
             workers.Clear();
-        }
-        public static List<DataGridViewRow> FillGridWorkers()
-        {
-            DBMSSQLEXP db = new();
-            db.SelectWorkers();
-
-            List<DataGridViewRow> rows = new();
-            DataGridView gv = new();
-            gv.ColumnCount = 6;
-
-            foreach (var item in workers)
-            {
-                rows.Add(new DataGridViewRow());
-                rows[rows.Count - 1].CreateCells(gv,
-                                                 item.Id,
-                                                 item.FName,
-                                                 item.LName,
-                                                 item.MName,
-                                                 item.Speed,
-                                                 item.Boxsize.ToString());
-            }
-            return rows;
         }
 
         public static void AddClient(Client client)
@@ -72,10 +44,6 @@ namespace IPLootbox
         public static void ClearClients()
         {
             clients.Clear();
-        }
-        public static void FillGridClients()
-        {
-            //todo
         }
 
         public static void AddOrder(Order order)
@@ -91,27 +59,42 @@ namespace IPLootbox
             orders.Clear();
         }
 
+        public static void FeelGridWorkers(DataGridView grid)
+        {
+            foreach (var item in workers)
+            {
+                grid.Rows.Add(item.Id,
+                                    item.FName,
+                                    item.LName,
+                                    item.MName,
+                                    item.Speed,
+                                    item.Boxsize.ToString(),
+                                    item.IsBusy);
+            }
+        }
+
         public static bool TryInputString(string rawstring)
         {
             string pattern = "^[\\p{L}\\p{M}\\-\\s]+$";
 
             if (string.IsNullOrWhiteSpace(rawstring))
-            {
+            {                
                 return false;
             }
             else if (!Regex.IsMatch(rawstring, pattern))
-            {
+            {                
                 return false;
             }
             else
-            {
+            {                
                 return true;
             }
         }
+
         public static bool TryInputFloat(string rawstring, out float number)
         {
             if (float.TryParse(rawstring, out number))
-            {
+            {                
                 return true;
             }
             number = 0.0f;

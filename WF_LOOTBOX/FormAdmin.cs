@@ -3,7 +3,6 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-
 namespace WF_LOOTBOX
 {
     public partial class FormAdmin : Form
@@ -33,7 +32,7 @@ namespace WF_LOOTBOX
             dgvWorkers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvWorkers.Hide();
             dgvWorkers.ReadOnly = true;
-            dgvWorkers.Rows.AddRange(Lootbox.FillGridWorkers().ToArray());
+            Lootbox.FeelGridWorkers(dgvWorkers);
 
             this.CancelButton = btnClose;
             btnClose.Click += new EventHandler(Close);
@@ -58,11 +57,13 @@ namespace WF_LOOTBOX
         private void Click_btnAdd(object sender, EventArgs e)
         {
             this.Enabled = false;
-
-            if ((bool)(txtFName.Tag ?? false) &&
-                (bool)(txtLName.Tag ?? false) &&
-                (bool)(txtMName.Tag ?? false) &&
-                (bool)(txtSpeed.Tag ?? false))
+            var i = (txtSpeed.Tag ?? false);
+            if (
+               (bool)(txtFName.Tag ?? false) &&
+               (bool)(txtLName.Tag ?? false) &&
+               (bool)(txtMName.Tag ?? false) &&
+               (bool)(txtSpeed.Tag ?? false)
+              )
             {
                 string message = "";
                 message += txtFName.Text.Trim() + " ";
@@ -74,16 +75,17 @@ namespace WF_LOOTBOX
                                               MessageBoxIcon.Exclamation);
                 if (res == DialogResult.OK)
                 {
+                    DBMSSQLEXP db = new DBMSSQLEXP();
+
                     string fname = txtFName.Text.Trim();
                     string lname = txtLName.Text.Trim();
                     string mname = txtMName.Text.Trim();
                     float speed = float.Parse(txtSpeed.Text.Trim());
                     int boxsize = (int)Enum.Parse(typeof(BoxSize), cmbBoxSize.Text.Trim(), true);
 
-                    Lootbox.AddWorker(fname, lname, mname, speed, boxsize);
+                    db.AddWorker(fname, lname, mname, speed, boxsize);
                     dgvWorkers.Rows.Clear();
-                    dgvWorkers.Rows.AddRange(Lootbox.FillGridWorkers().ToArray());
-                    ResetUserControls();
+                    Lootbox.FeelGridWorkers(dgvWorkers);
                 }
             }
             else
@@ -93,7 +95,7 @@ namespace WF_LOOTBOX
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Exclamation);
             }
-            
+
             this.Enabled = true;
         }
         private void Click_btnDel(object sender, EventArgs e)
@@ -114,46 +116,20 @@ namespace WF_LOOTBOX
                                           MessageBoxIcon.Exclamation);
                 if (res == DialogResult.OK)
                 {
-                    Lootbox.DelWorker(int.Parse(btnDel.Tag.ToString()));
+                    DBMSSQLEXP db = new DBMSSQLEXP();
+                    db.DeleteWorker(int.Parse(btnDel.Tag.ToString()));
                 }
                 dgvWorkers.Rows.Clear();
-                dgvWorkers.Rows.AddRange(Lootbox.FillGridWorkers().ToArray());
-                ResetUserControls();
+                Lootbox.FeelGridWorkers(dgvWorkers);
             }
             btnDel.Tag = "";
-            
             this.Enabled = true;
         }
         private void Click_btnList(object sender, EventArgs e)
         {
             dgvWorkers.Visible = !dgvWorkers.Visible;
-            if (!dgvWorkers.Visible) dgvWorkers.ClearSelection();
         }
 
-        private void ResetUserControls()
-        {
-
-            txtFName.TextChanged -= new EventHandler(CheckName);
-            txtLName.TextChanged -= new EventHandler(CheckName);
-            txtMName.TextChanged -= new EventHandler(CheckName);
-            txtSpeed.TextChanged -= new EventHandler(CheckSpeed);
-
-            txtFName.Text="";
-            txtLName.Text="";
-            txtMName.Text="";
-            txtSpeed.Text="";
-            cmbBoxSize.SelectedIndex = 0;
-
-            txtFName.Tag = null;
-            txtLName.Tag = null;
-            txtMName.Tag = null;
-            txtSpeed.Tag = null;
-
-            txtFName.TextChanged += new EventHandler(CheckName);
-            txtLName.TextChanged += new EventHandler(CheckName);
-            txtMName.TextChanged += new EventHandler(CheckName);
-            txtSpeed.TextChanged += new EventHandler(CheckSpeed);
-        }
         private void CheckSpeed(object sender, EventArgs e)
         {
             TextBox objevent = sender as TextBox;

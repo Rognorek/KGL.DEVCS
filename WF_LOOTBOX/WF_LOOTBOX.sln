@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31321.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WF_LOOTBOX", "WF_LOOTBOX.csproj", "{E31738B9-4AEC-429C-A2A5-53F8D35AEDD3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WF_LOOTBOX", "WF_LOOTBOX.csproj", "{E31738B9-4AEC-429C-A2A5-53F8D35AEDD3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IPLootbox", "IPLootbox\IPLootbox.csproj", "{4BA885C7-95EA-4782-ACCD-8ECE57B815E2}"
 EndProject
