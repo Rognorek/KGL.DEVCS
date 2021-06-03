@@ -9,6 +9,9 @@
 | 04 | 02.04 - 09.04 | Отладка и рефакторинг | [IP Lootbox](IP_LOOTBOX) <br>[Задача 2](Problem07.cs) | NA | [Задача 1](More.Problem07.cs)<br>[Задача 2](More.Problem08.cs) |
 | 05 | 09.04 - 16.04 | ООП | [IP Lootbox](IP_LOOTBOX)  | NA | [Задача 1](More.Problem09.cs) |
 | 06 | 16.04 - 23.04 | Библиотеки | [IP Lootbox](IP_LOOTBOX) | NA | NA |
-| 07 | 23.04 - 30.04 | FORMS | __todo__ | NA | NA |
-| 08 | 30.04 - ZZ.ZZ | DEMODAY | [IP Lootbox](IP_LOOTBOX) | NA | NA |
+| 07 | 23.04 - 30.04 | Windows forms | __todo__ | NA | NA |
+| 08 | 30.04 - 30.04 | __DEMODAY__ | [IP Lootbox](IP_LOOTBOX) | NA | NA |
 | 09 | 14.05 - 21.05 | Бизнеслогика | NA | NA | NA |
+| 10 | 21.05 - 28.05 | Динамические формы | NA | NA | NA |
+| 11 | 28.05 - 04.06 | Введение в БД | NA | NA | NA |
+| 12 | 04.06 - 04.06 | __ФИНАЛ__ | [WF Lootbox](IP_LOOTBOX) | NA | NA |
